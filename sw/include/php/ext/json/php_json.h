@@ -16,7 +16,7 @@
   +----------------------------------------------------------------------+
 */
 
-/* $Id: php_json.h 306938 2011-01-01 02:17:06Z felipe $ */
+/* $Id: php_json.h 315707 2011-08-29 14:56:19Z gwynne $ */
 
 #ifndef PHP_JSON_H
 #define PHP_JSON_H
@@ -62,6 +62,7 @@ extern zend_class_entry *php_json_serializable_ce;
 #define PHP_JSON_NUMERIC_CHECK	(1<<5)
 #define PHP_JSON_UNESCAPED_SLASHES	(1<<6)
 #define PHP_JSON_PRETTY_PRINT	(1<<7)
+#define PHP_JSON_UNESCAPED_UNICODE	(1<<8)
 
 /* Internal flags */
 #define PHP_JSON_OUTPUT_ARRAY	0

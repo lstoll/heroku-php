@@ -1,5 +1,5 @@
 dnl
-dnl $Id: acinclude.m4 308351 2011-02-15 08:28:03Z pajoye $
+dnl $Id: acinclude.m4 315258 2011-08-21 22:57:13Z rasmus $
 dnl
 dnl This file contains local autoconf functions.
 dnl
@@ -2271,7 +2271,7 @@ AC_DEFUN([PHP_SETUP_KERBEROS],[
     KERBEROS_LIBS=`$KRB5_CONFIG --libs gssapi`
     KERBEROS_CFLAGS=`$KRB5_CONFIG --cflags gssapi`
 
-    if test -n "$KERBEROS_LIBS" && test -n "$KERBEROS_CFLAGS"; then
+    if test -n "$KERBEROS_LIBS"; then
       found_kerberos=yes
       PHP_EVAL_LIBLINE($KERBEROS_LIBS, $1)
       PHP_EVAL_INCLINE($KERBEROS_CFLAGS)
@@ -2413,6 +2413,7 @@ AC_DEFUN([PHP_SETUP_OPENSSL],[
     ])
     LIBS=$old_LIBS
     PHP_ADD_LIBRARY(ssl,,$1)
+    PHP_ADD_LIBRARY(crypto,,$1)
 
     PHP_ADD_LIBPATH($OPENSSL_LIBDIR, $1)
   fi
@@ -2606,7 +2607,7 @@ dnl This macro is used to get a comparable
 dnl version for apache1/2.
 dnl
 AC_DEFUN([PHP_AP_EXTRACT_VERSION],[
-  ac_output=`$1 -v 2>&1 | grep version`
+  ac_output=`$1 -v 2>&1 | grep version | $SED -e 's/Oracle-HTTP-//'`
   ac_IFS=$IFS
 IFS="- /.
 "
@@ -2760,17 +2761,17 @@ dnl
 dnl PHP_CHECK_PDO_INCLUDES([found [, not-found]])
 dnl
 AC_DEFUN([PHP_CHECK_PDO_INCLUDES],[
-  AC_CACHE_CHECK([for PDO includes], pdo_inc_path, [
+  AC_CACHE_CHECK([for PDO includes], pdo_cv_inc_path, [
     AC_MSG_CHECKING([for PDO includes])
     if test -f $abs_srcdir/include/php/ext/pdo/php_pdo_driver.h; then
-      pdo_inc_path=$abs_srcdir/ext
+      pdo_cv_inc_path=$abs_srcdir/ext
     elif test -f $abs_srcdir/ext/pdo/php_pdo_driver.h; then
-      pdo_inc_path=$abs_srcdir/ext
+      pdo_cv_inc_path=$abs_srcdir/ext
     elif test -f $prefix/include/php/ext/pdo/php_pdo_driver.h; then
-      pdo_inc_path=$prefix/include/php/ext
+      pdo_cv_inc_path=$prefix/include/php/ext
     fi
   ])
-  if test -n "$pdo_inc_path"; then
+  if test -n "$pdo_cv_inc_path"; then
 ifelse([$1],[],:,[$1])
   else
 ifelse([$2],[],[AC_MSG_ERROR([Cannot find php_pdo_driver.h.])],[$2])
@@ -2922,6 +2923,10 @@ dnl header-file
 
 dnl Add providerdesc.o into global objects when needed
   case $host_alias in
+  *freebsd*)
+    PHP_GLOBAL_OBJS="[$]PHP_GLOBAL_OBJS [$]ac_bdir[$]ac_provsrc.o"
+    PHP_LDFLAGS="$PHP_LDFLAGS -lelf"
+    ;;
   *solaris*)
     PHP_GLOBAL_OBJS="[$]PHP_GLOBAL_OBJS [$]ac_bdir[$]ac_provsrc.o"
     ;;

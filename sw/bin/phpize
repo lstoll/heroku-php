@@ -2,6 +2,7 @@
 
 # Variable declaration
 prefix='/app/sw'
+datarootdir='/app/sw/php'
 exec_prefix="`eval echo ${prefix}`"
 phpdir="`eval echo ${exec_prefix}/lib/php`/build"
 includedir="`eval echo ${prefix}/include`/php"

@@ -16,7 +16,7 @@
    +----------------------------------------------------------------------+
 */
 
-/* $Id: php_globals.h 306938 2011-01-01 02:17:06Z felipe $ */
+/* $Id: php_globals.h 313575 2011-07-22 11:25:30Z pajoye $ */
 
 #ifndef PHP_GLOBALS_H
 #define PHP_GLOBALS_H
@@ -54,10 +54,6 @@ typedef struct _arg_separators {
 } arg_separators;
 
 struct _php_core_globals {
-	zend_bool magic_quotes_gpc;
-	zend_bool magic_quotes_runtime;
-	zend_bool magic_quotes_sybase;
-
 	zend_bool implicit_flush;
 
 	long output_buffering;

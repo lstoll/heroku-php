@@ -17,7 +17,7 @@
    +----------------------------------------------------------------------+
 */
 
-/* $Id: zend_globals.h 306938 2011-01-01 02:17:06Z felipe $ */
+/* $Id: zend_globals.h 312424 2011-06-23 23:00:53Z felipe $ */
 
 #ifndef ZEND_GLOBALS_H
 #define ZEND_GLOBALS_H
@@ -101,6 +101,7 @@ struct _zend_compiler_globals {
 
 	HashTable *auto_globals;
 
+	zend_bool parse_error;
 	zend_bool in_compilation;
 	zend_bool short_tags;
 	zend_bool asp_tags;

@@ -17,7 +17,7 @@
    +----------------------------------------------------------------------+
  */
 
-/* $Id: php.h 306938 2011-01-01 02:17:06Z felipe $ */
+/* $Id: php.h 313662 2011-07-25 11:30:53Z felipe $ */
 
 #ifndef PHP_H
 #define PHP_H
@@ -259,6 +259,11 @@ END_EXTERN_C()
 # endif
 #endif
 
+#if defined(__GNUC__) && __GNUC__ >= 4
+# define php_ignore_value(x) (({ __typeof__ (x) __x = (x); (void) __x; }))
+#else
+# define php_ignore_value(x) ((void) (x))
+#endif
 
 /* global variables */
 #if !defined(PHP_WIN32)
@@ -280,6 +285,7 @@ void phperror(char *error);
 PHPAPI int php_write(void *buf, uint size TSRMLS_DC);
 PHPAPI int php_printf(const char *format, ...) PHP_ATTRIBUTE_FORMAT(printf, 1,
 		2);
+PHPAPI int php_get_module_initialized(void);
 PHPAPI void php_log_err(char *log_message TSRMLS_DC);
 int Debug(char *format, ...) PHP_ATTRIBUTE_FORMAT(printf, 1, 2);
 int cfgparse(void);
@@ -353,6 +359,7 @@ END_EXTERN_C()
 #define PHP_MALIAS      ZEND_MALIAS
 #define PHP_ABSTRACT_ME ZEND_ABSTRACT_ME
 #define PHP_ME_MAPPING  ZEND_ME_MAPPING
+#define PHP_FE_END      ZEND_FE_END
 
 #define PHP_MODULE_STARTUP_N	ZEND_MODULE_STARTUP_N
 #define PHP_MODULE_SHUTDOWN_N	ZEND_MODULE_SHUTDOWN_N

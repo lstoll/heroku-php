@@ -17,7 +17,7 @@
    +----------------------------------------------------------------------+
 */
 
-/* $Id: zend_compile.h 306938 2011-01-01 02:17:06Z felipe $ */
+/* $Id: zend_compile.h 313114 2011-07-10 15:03:38Z felipe $ */
 
 #ifndef ZEND_COMPILE_H
 #define ZEND_COMPILE_H
@@ -39,6 +39,7 @@
 #define INC_BPC(op_array)	if (op_array->fn_flags & ZEND_ACC_INTERACTIVE) { (CG(context).backpatch_count++); }
 #define DEC_BPC(op_array)	if (op_array->fn_flags & ZEND_ACC_INTERACTIVE) { (CG(context).backpatch_count--); }
 #define HANDLE_INTERACTIVE()  if (CG(active_op_array)->fn_flags & ZEND_ACC_INTERACTIVE) { execute_new_code(TSRMLS_C); }
+#define DO_TICKS()            if (Z_LVAL(CG(declarables).ticks)) { zend_do_ticks(TSRMLS_C); }
 
 #define RESET_DOC_COMMENT()        \
     {                              \
@@ -133,6 +134,11 @@ typedef struct _zend_try_catch_element {
 	zend_uint catch_op;  /* ketchup! */
 } zend_try_catch_element;
 
+#if SIZEOF_LONG == 8
+#define THIS_HASHVAL 210728972157UL
+#else
+#define THIS_HASHVAL 275574653UL
+#endif
 
 /* method flags (types) */
 #define ZEND_ACC_STATIC			0x01
@@ -408,7 +414,7 @@ ZEND_API int zend_get_compiled_lineno(TSRMLS_D);
 ZEND_API size_t zend_get_scanned_file_offset(TSRMLS_D);
 
 void zend_resolve_non_class_name(znode *element_name, zend_bool check_namespace TSRMLS_DC);
-void zend_resolve_class_name(znode *class_name, ulong *fetch_type, int check_ns_name TSRMLS_DC);
+void zend_resolve_class_name(znode *class_name, ulong fetch_type, int check_ns_name TSRMLS_DC);
 ZEND_API char* zend_get_compiled_variable_name(const zend_op_array *op_array, zend_uint var, int* name_len);
 
 #ifdef ZTS
@@ -676,6 +682,7 @@ typedef struct _zend_auto_global {
 ZEND_API int zend_register_auto_global(const char *name, uint name_len, zend_bool jit, zend_auto_global_callback auto_global_callback TSRMLS_DC);
 ZEND_API void zend_activate_auto_globals(TSRMLS_D);
 ZEND_API zend_bool zend_is_auto_global(const char *name, uint name_len TSRMLS_DC);
+ZEND_API zend_bool zend_is_auto_global_quick(const char *name, uint name_len, ulong hashval TSRMLS_DC);
 ZEND_API size_t zend_dirname(char *path, size_t len);
 
 int zendlex(znode *zendlval TSRMLS_DC);

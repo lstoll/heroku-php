@@ -16,7 +16,7 @@
    +----------------------------------------------------------------------+
 */
 
-/* $Id: SAPI.h 307977 2011-02-03 16:47:28Z scottmac $ */
+/* $Id: SAPI.h 311096 2011-05-16 15:52:31Z rasmus $ */
 
 #ifndef SAPI_H
 #define SAPI_H
@@ -241,7 +241,7 @@ struct _sapi_module_struct {
 
 	void (*register_server_variables)(zval *track_vars_array TSRMLS_DC);
 	void (*log_message)(char *message TSRMLS_DC);
-	time_t (*get_request_time)(TSRMLS_D);
+	double (*get_request_time)(TSRMLS_D);
 	void (*terminate_process)(TSRMLS_D);
 
 	char *php_ini_path_override;

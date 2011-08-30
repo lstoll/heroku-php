@@ -2,21 +2,23 @@
 
 SED="/bin/sed"
 prefix="/app/sw"
+datarootdir="/app/sw/php"
 exec_prefix="${prefix}"
-version="5.3.99-dev"
-vernum="50399"
+version="5.4.0beta1-dev"
+vernum="50400"
 include_dir="${prefix}/include/php"
 includes="-I$include_dir -I$include_dir/main -I$include_dir/TSRM -I$include_dir/Zend -I$include_dir/ext -I$include_dir/ext/date/lib"
 ldflags=""
-libs="-lcrypt   -lresolv -lcrypt -lrt -lrt -lm -ldl -lnsl  -lxml2 -lxml2 -lxml2 -lcrypt -lxml2 -lxml2 -lxml2 -lcrypt "
+libs="-lcrypt   -lcrypt -lpq -lrt -lrt -lm -ldl -lnsl  -lxml2 -lxml2 -lxml2 -lcrypt -lxml2 -lxml2 -lxml2 -lcrypt "
 extension_dir='/app/sw/lib/php/extensions/no-debug-non-zts-20100525'
+man_dir=`eval echo ${datarootdir}/man`
 program_prefix=""
 program_suffix=""
 exe_extension=""
 php_cli_binary=NONE
 php_cgi_binary=NONE
-configure_options=" '--prefix=/app/sw' '--disable-cgi'"
-php_sapis=" cli"
+configure_options=" '--with-pgsql' '--prefix=/app/sw'"
+php_sapis=" cli cgi"
 
 # Set php_cli_binary and php_cgi_binary if available
 for sapi in $php_sapis; do
@@ -59,6 +61,8 @@ case "$1" in
   echo $php_sapis;;
 --configure-options)
   echo $configure_options;;
+--man-dir)
+  echo $man_dir;;
 --version)
   echo $version;;
 --vernum)
@@ -73,6 +77,7 @@ Options:
   --libs              [$libs]
   --extension-dir     [$extension_dir]
   --include-dir       [$include_dir]
+  --man-dir           [$man_dir]
   --php-binary        [$php_binary]
   --php-sapis         [$php_sapis]
   --configure-options [$configure_options]

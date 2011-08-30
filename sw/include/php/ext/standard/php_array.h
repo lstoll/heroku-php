@@ -19,7 +19,7 @@
    +----------------------------------------------------------------------+
 */
 
-/* $Id: php_array.h 306938 2011-01-01 02:17:06Z felipe $ */
+/* $Id: php_array.h 315736 2011-08-29 20:23:34Z arpad $ */
 
 #ifndef PHP_ARRAY_H
 #define PHP_ARRAY_H
@@ -113,6 +113,8 @@ PHPAPI int php_multisort_compare(const void *a, const void *b TSRMLS_DC);
 #define PHP_SORT_DESC               3
 #define PHP_SORT_ASC                4
 #define PHP_SORT_LOCALE_STRING      5
+#define PHP_SORT_NATURAL            6
+#define PHP_SORT_FLAG_CASE          8
 
 ZEND_BEGIN_MODULE_GLOBALS(array) 
 	int *multisort_flags[2];

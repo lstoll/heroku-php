@@ -17,7 +17,7 @@
    +----------------------------------------------------------------------+
 */
 
-/* $Id: php_libxml.h 306938 2011-01-01 02:17:06Z felipe $ */
+/* $Id: php_libxml.h 315752 2011-08-30 01:08:22Z cataphract $ */
 
 #ifndef PHP_LIBXML_H
 #define PHP_LIBXML_H
@@ -43,6 +43,10 @@ ZEND_BEGIN_MODULE_GLOBALS(libxml)
 	zval *stream_context;
 	smart_str error_buffer;
 	zend_llist *error_list;
+	struct _php_libxml_entity_resolver {
+		zend_fcall_info			fci;
+		zend_fcall_info_cache	fcc;
+	} entity_loader;
 ZEND_END_MODULE_GLOBALS(libxml)
 
 typedef struct _libxml_doc_props {

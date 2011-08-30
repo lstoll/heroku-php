@@ -17,7 +17,7 @@
    +----------------------------------------------------------------------+
 */
 
-/* $Id: zend.h 307522 2011-01-16 20:39:22Z stas $ */
+/* $Id: zend.h 315001 2011-08-16 10:44:47Z bjori $ */
 
 #ifndef ZEND_H
 #define ZEND_H
@@ -531,8 +531,10 @@ typedef struct _zend_utility_functions {
 	int (*write_function)(const char *str, uint str_length);
 	FILE *(*fopen_function)(const char *filename, char **opened_path TSRMLS_DC);
 	void (*message_handler)(long message, void *data TSRMLS_DC);
+#ifndef ZEND_SIGNALS
 	void (*block_interruptions)(void);
 	void (*unblock_interruptions)(void);
+#endif
 	int (*get_configuration_directive)(const char *name, uint name_length, zval *contents);
 	void (*ticks_function)(int ticks);
 	void (*on_timeout)(int seconds TSRMLS_DC);
@@ -573,10 +575,7 @@ typedef int (*zend_write_func_t)(const char *str, uint str_length);
 #define IS_RESOURCE	7
 #define IS_CONSTANT	8
 #define IS_CONSTANT_ARRAY	9
-/* used for type-hinting only */
-#define IS_CLASS	10
-#define IS_SCALAR	11
-#define IS_NUMERIC	12
+#define IS_CALLABLE	10
 
 /* Ugly hack to support constants as static array indices */
 #define IS_CONSTANT_TYPE_MASK		0x00f
@@ -678,8 +677,10 @@ BEGIN_EXTERN_C()
 extern ZEND_API int (*zend_printf)(const char *format, ...) ZEND_ATTRIBUTE_PTR_FORMAT(printf, 1, 2);
 extern ZEND_API zend_write_func_t zend_write;
 extern ZEND_API FILE *(*zend_fopen)(const char *filename, char **opened_path TSRMLS_DC);
+#ifndef ZEND_SIGNALS
 extern ZEND_API void (*zend_block_interruptions)(void);
 extern ZEND_API void (*zend_unblock_interruptions)(void);
+#endif
 extern ZEND_API void (*zend_ticks_function)(int ticks);
 extern ZEND_API void (*zend_error_cb)(int type, const char *error_filename, const uint error_lineno, const char *format, va_list args) ZEND_ATTRIBUTE_PTR_FORMAT(printf, 4, 0);
 extern void (*zend_on_timeout)(int seconds TSRMLS_DC);
@@ -702,8 +703,15 @@ END_EXTERN_C()
 
 #define ZEND_UV(name) (zend_uv.name)
 
+#ifndef ZEND_SIGNALS
 #define HANDLE_BLOCK_INTERRUPTIONS()		if (zend_block_interruptions) { zend_block_interruptions(); }
 #define HANDLE_UNBLOCK_INTERRUPTIONS()		if (zend_unblock_interruptions) { zend_unblock_interruptions(); }
+#else
+#include "zend_signal.h"
+
+#define HANDLE_BLOCK_INTERRUPTIONS()		SIGG(depth)++;
+#define HANDLE_UNBLOCK_INTERRUPTIONS()		if (UNEXPECTED((--SIGG(depth))==SIGG(blocked))) { zend_signal_handler_unblock(TSRMLS_C); }
+#endif
 
 BEGIN_EXTERN_C()
 ZEND_API void zend_message_dispatcher(long message, void *data TSRMLS_DC);

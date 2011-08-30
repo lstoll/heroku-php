@@ -16,7 +16,7 @@
    +----------------------------------------------------------------------+
 */
 
-/* $Id: zend_strtod.h 306938 2011-01-01 02:17:06Z felipe $ */
+/* $Id: zend_strtod.h 313756 2011-07-27 00:14:02Z pajoye $ */
 
 /* This is a header file for the strtod implementation by David M. Gay which
  * can be found in zend_strtod.c */
@@ -30,6 +30,7 @@ ZEND_API char * zend_dtoa(double _d, int mode, int ndigits, int *decpt, int *sig
 ZEND_API double zend_strtod(const char *s00, const char **se);
 ZEND_API double zend_hex_strtod(const char *str, const char **endptr);
 ZEND_API double zend_oct_strtod(const char *str, const char **endptr);
+ZEND_API double zend_bin_strtod(const char *str, const char **endptr);
 ZEND_API int zend_startup_strtod(void);
 ZEND_API int zend_shutdown_strtod(void);
 END_EXTERN_C()

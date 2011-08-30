@@ -17,7 +17,7 @@
    +----------------------------------------------------------------------+
 */
 
-/* $Id: zend_multibyte.h 306938 2011-01-01 02:17:06Z felipe $ */
+/* $Id: zend_multibyte.h 308950 2011-03-06 07:00:30Z moriyoshi $ */
 
 #ifndef ZEND_MULTIBYTE_H
 #define ZEND_MULTIBYTE_H
@@ -74,9 +74,6 @@ ZEND_API const zend_encoding *zend_multibyte_get_script_encoding(TSRMLS_D);
 ZEND_API int zend_multibyte_set_script_encoding(const zend_encoding **encoding_list, size_t encoding_list_size TSRMLS_DC);
 ZEND_API int zend_multibyte_set_internal_encoding(const zend_encoding *encoding TSRMLS_DC);
 ZEND_API int zend_multibyte_set_script_encoding_by_string(const char *new_value, size_t new_value_length TSRMLS_DC);
-
-ZEND_API size_t zend_multibyte_script_encoding_filter(unsigned char **to, size_t *to_length, const unsigned char *from, size_t from_length TSRMLS_DC);
-ZEND_API size_t zend_multibyte_internal_encoding_filter(unsigned char **to, size_t *to_length, const unsigned char *from, size_t from_length TSRMLS_DC);
 
 END_EXTERN_C()
 

@@ -16,9 +16,9 @@
    +----------------------------------------------------------------------+
 */
 
-/* $Id: build-defs.h.in 292156 2009-12-15 11:17:47Z jani $ */
+/* $Id: build-defs.h.in 310307 2011-04-18 09:50:32Z bjori $ */
 
-#define CONFIGURE_COMMAND " './configure'  '--prefix=/app/sw' '--disable-cgi'"
+#define CONFIGURE_COMMAND " './configure'  '--with-pgsql' '--prefix=/app/sw'"
 #define PHP_ADA_INCLUDE		""
 #define PHP_ADA_LFLAGS		""
 #define PHP_ADA_LIBS		""
@@ -81,8 +81,9 @@
 #define PHP_PREFIX              "/app/sw"
 #define PHP_BINDIR              "/app/sw/bin"
 #define PHP_SBINDIR             "/app/sw/sbin"
+#define PHP_MANDIR              "/app/sw/php/man"
 #define PHP_LIBDIR              "/app/sw/lib/php"
-#define PHP_DATADIR             "/app/sw/share/php"
+#define PHP_DATADIR             "${prefix}/share"
 #define PHP_SYSCONFDIR          "/app/sw/etc"
 #define PHP_LOCALSTATEDIR       "/app/sw/var"
 #define PHP_CONFIG_FILE_PATH    "/app/sw/lib"

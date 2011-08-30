@@ -17,7 +17,7 @@
    +----------------------------------------------------------------------+
 */
 
-/* $Id: zend_multiply.h 306938 2011-01-01 02:17:06Z felipe $ */
+/* $Id: zend_multiply.h 311662 2011-05-31 12:05:25Z dmitry $ */
 
 #if defined(__i386__) && defined(__GNUC__)
 
@@ -25,6 +25,18 @@
 	long __tmpvar; 													\
 	__asm__ ("imul %3,%0\n"											\
 		"adc $0,%1" 												\
+			: "=r"(__tmpvar),"=r"(usedval) 							\
+			: "0"(a), "r"(b), "1"(0));								\
+	if (usedval) (dval) = (double) (a) * (double) (b);				\
+	else (lval) = __tmpvar;											\
+} while (0)
+
+#elif defined(__x86_64__) && defined(__GNUC__)
+
+#define ZEND_SIGNED_MULTIPLY_LONG(a, b, lval, dval, usedval) do {	\
+	long __tmpvar; 													\
+	__asm__ ("imulq %3,%0\n"										\
+		"adcq $0,%1" 												\
 			: "=r"(__tmpvar),"=r"(usedval) 							\
 			: "0"(a), "r"(b), "1"(0));								\
 	if (usedval) (dval) = (double) (a) * (double) (b);				\

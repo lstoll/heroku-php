@@ -16,7 +16,7 @@
    +----------------------------------------------------------------------+
  */
 
-/* $Id: spl_functions.h 306938 2011-01-01 02:17:06Z felipe $ */
+/* $Id: spl_functions.h 313640 2011-07-23 19:08:43Z gron $ */
 
 #ifndef PHP_FUNCTIONS_H
 #define PHP_FUNCTIONS_H
@@ -62,6 +62,7 @@ void spl_register_property( zend_class_entry * class_entry, char *prop_name, int
  */
 void spl_add_class_name(zval * list, zend_class_entry * pce, int allow, int ce_flags TSRMLS_DC);
 void spl_add_interfaces(zval * list, zend_class_entry * pce, int allow, int ce_flags TSRMLS_DC);
+void spl_add_traits(zval * list, zend_class_entry * pce, int allow, int ce_flags TSRMLS_DC);
 int spl_add_classes(zend_class_entry *pce, zval *list, int sub, int allow, int ce_flags TSRMLS_DC);
 
 /* caller must efree(return) */

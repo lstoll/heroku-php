@@ -12,7 +12,7 @@
  * @author     Tomas V.V.Cox <cox@idecnet.com>
  * @copyright  1997-2009 The Authors
  * @license    http://opensource.org/licenses/bsd-license.php New BSD License
- * @version    CVS: $Id: pearcmd.php 308720 2011-02-27 13:56:15Z dufuz $
+ * @version    CVS: $Id: pearcmd.php 313023 2011-07-06 19:17:11Z dufuz $
  * @link       http://pear.php.net/package/PEAR
  */
 
@@ -43,7 +43,7 @@ ob_implicit_flush(true);
 $_PEAR_PHPDIR = '#$%^&*';
 set_error_handler('error_handler');
 
-$pear_package_version = "1.9.3";
+$pear_package_version = "1.9.4";
 
 require_once 'PEAR.php';
 require_once 'PEAR/Frontend.php';

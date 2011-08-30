@@ -19,7 +19,7 @@
    +----------------------------------------------------------------------+
  */
 
-/* $Id: php_stream_filter_api.h 306938 2011-01-01 02:17:06Z felipe $ */
+/* $Id: php_stream_filter_api.h 309927 2011-04-03 21:46:52Z pierrick $ */
 
 /* The filter API works on the principle of "Bucket-Brigades".  This is
  * partially inspired by the Apache 2 method of doing things, although
@@ -27,7 +27,7 @@
  *
  * Each stream can have a chain of filters for reading and another for writing.
  * 
- * When data is written to the stream, is is placed into a bucket and placed at
+ * When data is written to the stream, it is placed into a bucket and placed at
  * the start of the input brigade.
  *
  * The first filter in the chain is invoked on the brigade and (depending on
