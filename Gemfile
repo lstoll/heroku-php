@@ -1,3 +1,3 @@
 source :rubyforge
 
-gem 'rake'
+gem 'rake', '0.9.2'
